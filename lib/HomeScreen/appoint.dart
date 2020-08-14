@@ -14,7 +14,7 @@ class _AppointmentState extends State<Appointment> {
   Widget build(BuildContext context) {
     return Scaffold(appBar: AppBar(title:Text('My Appointments')),
     body: StreamBuilder(
-      stream: getUserTrips(context),
+      stream: getData(context),
       builder:(context,snapshot){ 
         if(!snapshot.hasData)
         return Text('Loading');
@@ -28,7 +28,7 @@ class _AppointmentState extends State<Appointment> {
       }
      ) );
   }
-  Stream<QuerySnapshot> getUserTrips(BuildContext context)async*{
+  Stream<QuerySnapshot> getData(BuildContext context)async*{
     final uid=await Provider.of(context).getUserId();
     yield* Firestore.instance.collection('userData').document(uid).collection('appointment').snapshots();
 
@@ -38,7 +38,7 @@ class _AppointmentState extends State<Appointment> {
   }
    Widget buildCardDetails(BuildContext context , DocumentSnapshot document){
      
-  final  trip=Dsearch.fromSnapshot(document);
+  final  dsearch=Dsearch.fromSnapshot(document);
      return  Container(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -55,17 +55,17 @@ class _AppointmentState extends State<Appointment> {
                           children: <Widget>[
                              Row(
           children: <Widget>[
-            Image.asset(trip.dimage==null?'null':trip.dimage, height: 80,),
+            Image.asset(dsearch.dimage==null?'':dsearch.dimage, height: 80,),
             Spacer(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(trip.dname==null?'null':trip.dname, style: TextStyle(
+                Text(dsearch.dname==null?'':dseacrh.dname, style: TextStyle(
                   color: Color(0xffFC9535),
                   fontSize: 23
                 ),),
                 SizedBox(height: 2,),
-                Text(trip.dspeciality==null?'null':trip.dspeciality, style: TextStyle(
+                Text(dseacrh.dspeciality==null?'':dsearch.dspeciality, style: TextStyle(
                   fontSize: 19,
                   color: Colors.grey[700]
                 ),),
